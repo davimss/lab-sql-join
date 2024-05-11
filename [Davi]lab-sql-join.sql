@@ -1,0 +1,37 @@
+-- List the number of films per category.
+
+USE SAKILA;
+SELECT CAT.NAME AS CATEGORY, COUNT(F.FILM_ID) AS NUM_FIMS
+FROM SAKILA.CATEGORY CAT
+JOIN SAKILA.FILM_CATEGORY FC 
+ON CAT.CATEGORY_ID = FC.CATEGORY_ID
+JOIN FILM F ON F.FILM_ID = F.FILM_ID
+GROUP BY CAT.NAME;
+
+-- Display the first and the last names, as well as the address, of each staff member.
+SELECT STAFF_LIST.NAME, STAFF_LIST.ADDRESS
+FROM SAKILA.STAFF_LIST;
+
+-- Display the total amount rung up by each staff member in August 2005.
+SELECT S.STAFF_ID, S.FIRST_NAME, S.LAST_NAME, SUM(PAY.AMOUNT) AS TOTAL_AMOUNT
+FROM SAKILA.STAFF S
+JOIN SAKILA.PAYMENT PAY 
+ON S.STAFF_ID = PAY.STAFF_ID
+WHERE PAY.PAYMENT_DATE BETWEEN '2005-08-01' AND '2005-08-31'
+GROUP BY PAY.STAFF_ID;
+
+-- List all films and the number of actors who are listed for each film.
+SELECT F.FILM_ID, F.TITLE, COUNT(FA.ACTOR_ID) AS NUM_ACTORS
+FROM SAKILA.FILM F
+JOIN FILM_ACTOR FA
+ON F.FILM_ID = FA.FILM_ID
+GROUP BY F.FILM_ID;
+
+-- Using the payment and the customer tables as well as the JOIN command, list the total amount paid by each customer. 
+-- List the customers alphabetically by their last names.
+SELECT C.CUSTOMER_ID, C.FIRST_NAME, C.LAST_NAME, SUM(PAY.AMOUNT) AS TOTAL_AMOUNT
+FROM SAKILA.CUSTOMER C
+JOIN SAKILA.PAYMENT PAY 
+ON C.CUSTOMER_ID = PAY.CUSTOMER_ID
+GROUP BY C.CUSTOMER_ID
+;
